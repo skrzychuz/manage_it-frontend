@@ -1,27 +1,7 @@
 $(function(){
 
-	var $tasks = $('#tasks');
-
-
-	$.ajax({
-		type: 'GET',
-		url: 'http://localhost:8080/getTasks',
-		success: function(data) {
-			$.each(data, function(i, item) {
-				$tasks.append('<tr><th scope="row">' + (i+1) + '</th>' +
-				'<td>' + item.name +'</td>' 
-				+ '<td>' + item.assignee.name +'</td>' 
-				+ '<td>' + item.dueTime +'</td></tr>')
-
-			});
-		}
-	});
-});
-
-$(function(){
-
   var $assignee = $('#assignee');
-
+  var $name = $('#name');
   $.ajax({
     type: 'GET',
     url: 'http://localhost:8080/getAssignees',
@@ -38,20 +18,22 @@ $(function(){
   });
 
  
-
-
 $('#add1').on('click', function(){
-   var $name = $('#name');
-  var assignee = {
-    name: $name.val()
-  };
 
+  var assignee = {
+    name: $name.val(),
+  };
   $.ajax({
+    headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    },
     type: 'POST',
-    ulr: 'http://localhost:8080/postAssignee1',
-    data: assignee,
+    url: 'http://localhost:8080/addAssignee1',
+    data: JSON.stringify(assignee),
+    dataType: 'json',
     success: function(newAssignee) {
-      $assignee.append('<tr><th scope="row">' + (i+1) + '</th>' +
+      $assignee.append('<tr><th scope="row"></th>' +
         '<td>' + newAssignee.name +'</td></tr>');
       },
       error: function(){
@@ -60,5 +42,51 @@ $('#add1').on('click', function(){
       });
   });
   });
+
+$(function(){
+
+  var $tasks = $('#tasks');
+    var $name = $('#name');
+
+
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost:8080/getTasks',
+    success: function(data) {
+      $.each(data, function(i, item) {
+        $tasks.append('<tr><th scope="row">' + (i+1) + '</th>' +
+        '<td>' + item.name +'</td>' 
+        + '<td>' + item.assignee.name +'</td>' 
+        + '<td>' + item.dueTime +'</td></tr>')
+
+      });
+    }
+  });
+  });
+
+$(function(){
+
+  var $assignee = $('#select');
+
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost:8080/getAssignees',
+    success: function(data) {
+      $.each(data, function(i, item) {
+        $assignee.append('<option>' + item.name + '</option>')
+
+      });
+    },
+    error: function() {
+      alert('loading error')
+    }
+  });
+  });
+
+
+
+// $('#myModal').on('hidden.bs.modal', function () {
+//   document.location.reload();
+// });
 
 

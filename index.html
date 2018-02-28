@@ -17,30 +17,76 @@
   <h3>My Crew and Them Tasks</h3>
 
 
-  <p>
-    <button id="btn_ass">Add Assignee</button>
-    <button id="btn_task">Add Task</button>
-  </p>
 
 <!-- Trigger the modal with a button -->
-<button id="new_button" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Assignee in modal</button>
+<button id="new_button" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Assignee</button>
+<button id="new_button2" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Add Task</button>
+<p></p>
 
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <div class="modal-content">
-                  <h4 class="modal-title">Add new assignee</h4>
-                  <p> Assignee name: <input type ='text' id='name'</p>
-
-      
-        <button id = 'add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
-      
-    </div>
+   <div class="modal-content">
+    <h4 class="modal-title">Add new assignee</h4>
+    <p> Assignee name: <input type ='text' id='name'</p>
+     <button id = 'add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
+   </div>
+   </div>
   </div>
 </div>
 
 
-         
+<div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <h4 class="modal-title">Add new assignee</h4>
+    
+
+<form>
+  <div class="form-group">
+    <label for="forTaskName">Task name</label>
+    <input type="task_name" class="form-control" id="taskName">
+  </div>
+    <div class="form-group">
+    <label for="forDescription">Task description</label>
+    <textarea class="form-control" id="task_desc" rows="3"></textarea>
+  </div>
+  <div class="well">
+  <div id="datetimepicker3" class="input-append">
+    <input data-format="hh:mm:ss" type="text"></input>
+    <span class="add-on">
+      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+      </i>
+    </span>
+  </div>
 </div>
+<script type="text/javascript">
+  $(function() {
+    $('#datetimepicker3').datetimepicker({
+      pickDate: true
+    });
+  });
+</script>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="select">
+    </select>
+  </div>
+
+</form>
+
+
+
+
+
+     <button id = 'add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
+   </div>
+   </div>
+  </div>
+</div>
+
+
+
+
 
     <div class="row">
         <div class="col-sm-4">
