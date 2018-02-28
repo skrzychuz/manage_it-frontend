@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="hello.js"></script>
@@ -13,14 +14,46 @@
 
 <body>
 <div class="container">
-  <h1>My First Page</h1>
-  <p>par1</p> 
-  <p>par2</p>           
+  <h3>My Crew and Them Tasks</h3>
+
+
+  <p>
+    <button id="btn_ass">Add Assignee</button>
+    <button id="btn_task">Add Task</button>
+  </p>
+
+<!-- Trigger the modal with a button -->
+<button id="new_button" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Assignee in modal</button>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+                  <h4 class="modal-title">Add new assignee</h4>
+                  <p> Assignee name: <input type ='text' id='name'</p>
+
+      
+        <button id = 'add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
+      
+    </div>
+  </div>
+</div>
+
+
+         
 </div>
 
     <div class="row">
-    <div class="col-sm-4">.col-sm-4</div>
-    <div class="col-sm-8">.col-sm-8</div>
+        <div class="col-sm-4">
+        <table class="table table-hover">
+        <tbody id="assignee"></tbody>
+        </table>
+        </div>
+        
+        <div class="col-sm-8">
+        <table class="table table-hover">
+        <tbody id="tasks"></tbody>
+        </table>
+        </div>
     </div>
 
 </body>
