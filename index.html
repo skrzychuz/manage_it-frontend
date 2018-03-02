@@ -2,105 +2,95 @@
 <html lang="en">
 
 <head>
-    <title>My Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="mystyle.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="hello.js"></script>
+  <title>My Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="hello.js"></script>
+
 </head>
 
 <body>
-<div class="container">
-  <h3>My Crew and Them Tasks</h3>
+  <div class="container">
+    <h3>My Crew and Them Tasks</h3>
 
+    <div class="col-sm-4">
+      <button id="new_button" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Assignee</button>
 
-
-<!-- Trigger the modal with a button -->
-<button id="new_button" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Assignee</button>
-<button id="new_button2" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Add Task</button>
-<p></p>
-
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-   <div class="modal-content">
-    <h4 class="modal-title">Add new assignee</h4>
-    <p> Assignee name: <input type ='text' id='name'</p>
-     <button id = 'add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
-   </div>
-   </div>
-  </div>
-</div>
-
-
-<div id="myModal2" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-   <div class="modal-content">
-    <h4 class="modal-title">Add new assignee</h4>
-    
-
-<form>
-  <div class="form-group">
-    <label for="forTaskName">Task name</label>
-    <input type="task_name" class="form-control" id="taskName">
-  </div>
-    <div class="form-group">
-    <label for="forDescription">Task description</label>
-    <textarea class="form-control" id="task_desc" rows="3"></textarea>
-  </div>
-  <div class="well">
-  <div id="datetimepicker3" class="input-append">
-    <input data-format="hh:mm:ss" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
-</div>
-<script type="text/javascript">
-  $(function() {
-    $('#datetimepicker3').datetimepicker({
-      pickDate: true
-    });
-  });
-</script>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="select">
-    </select>
-  </div>
-
-</form>
-
-
-
-
-
-     <button id = 'add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
-   </div>
-   </div>
-  </div>
-</div>
-
-
-
-
-
-    <div class="row">
-        <div class="col-sm-4">
-        <table class="table table-hover">
+      <table class="table table-filter">
         <tbody id="assignee"></tbody>
-        </table>
-        </div>
-        
-        <div class="col-sm-8">
-        <table class="table table-hover">
-        <tbody id="tasks"></tbody>
-        </table>
-        </div>
+      </table>
     </div>
 
+    <div class="col-sm-8">
+      <button id="new_button2" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Add Task</button>
+      <button id="btn_status" type="button" class="btn btn-primary">In Progres</button>
+      <button type="button" class="btn btn-secondary">Pending</button>
+      <button type="button" class="btn btn-success">Done</button>
+      <table class="table table-hover">
+        <tbody id="tasks"></tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h4 class="modal-title">Add new assignee</h4>
+        <p> Assignee name: <input type='text' id='name' </p>
+          <button id='add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="myModal2" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h4 class="modal-title">Add new assignee</h4>
+
+
+        <form>
+          <div class="form-group">
+            <label for="forTaskName">Task name</label>
+            <input type="task_name" class="form-control" id="taskName">
+          </div>
+          <div class="form-group">
+            <label for="forDescription">Task description</label>
+            <textarea class="form-control" id="task_desc" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <input class="form-control" type="date" id="dateInput">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Assignee</label>
+            <select class="form-control" id="assigneeList">
+<!--           <select class="form-control" onchange="terefere(this);" id="assigneeList"> -->
+
+    </select>
+          </div>
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Task Status</label>
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="statusSelect">
+        <option selected>Status...</option>
+       </select>
+        </form>
+        <button id='addTask' type="button" class="btn btn-default" data-dismiss="modal">add task</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+
+
 </body>
+
 </html>
