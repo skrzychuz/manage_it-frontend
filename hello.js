@@ -1,6 +1,10 @@
 $(function() {
 
-  $(function() {
+          $('#DetailModal').on('show.bs.modal', function(e) {
+                var $modal = $(this),
+                idd = e.relatedTarget.id;
+              })
+
 
     var $assignee = $('#assignee')
       .html("");
@@ -54,7 +58,7 @@ $(function() {
             alert('loading error')
           });
       });
-  });
+
 
 
   $(function() {
@@ -67,14 +71,22 @@ $(function() {
       })
       .done(function(data) {
         $.each(data, function(i, item) {
-          $tasks.append('<tr><th scope="row">' + (i + 1) + '</th>' +
+          // $tasks.append('<tr onclick="myFunction(this)">' +
+          $tasks.append('<tr data-toggle="modal" id="55" data-target="#DetailModal">' +
             '<td>' + item.name + '</td>' +
             '<td>' + item.assignee.name + '</td>' +
             '<td>' + item.taskStatus.name + '</td>' +
-            '<td>' + item.dueTime + '</td></tr>')
+            '<td>' + item.dueTime + '</td>' +
+            '<td>'+
+                '<span class="btn-group pull-right" style="margin-top: 5px">'+
+                 ' <button class="btn btn-warning btn-xs" data-toggle="modal" data-target= "#product_edit"><i class="glyphicon glyphicon-edit" ></i></button>'+
+                 ' <button class="btn btn-success btn-xs"; data-toggle="modal" data-target="#product_remove"><i class="glyphicon glyphicon-check" ></i></button>'+
+                '</span>' +
+              '</td>'+
+            '</tr>')
         });
       })
-  })
+
 
   $('#addTask')
     .on('click', function() {
@@ -201,10 +213,48 @@ $(function() {
         })
     })
 
+////////////////////////////////////////////////////////
+  $('#btn_Done')
+    .on('click', function() {
+
+      var $tasks = $('#tasks')
+        .html("");
+      $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: 'GET',
+          url: 'http://localhost:8080/getTask123',
+          data: {
+            "taskStatus": "Done"
+          }
+        })
+        .done(function(data) {
+          $.each(data, function(i, item) {
+            $tasks.append('<tr><th scope="row">' + (i + 1) + '</th>' +
+              '<td>' + item.name + '</td>' +
+              '<td>' + item.assignee.name + '</td>' +
+              '<td>' + item.taskStatus.name + '</td>' +
+              '<td>' + item.dueTime + '</td></tr>')
+          })
+        })
+    })
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
       $('#btn_All')
     .on('click', function() {
 
-    var $tasks = $('#tasks');
+    var $tasks = $('#tasks').html("");
 
     $.ajax({
         type: 'GET',
@@ -263,7 +313,8 @@ $(function() {
       }
     })
   })
-})
+  })
+  })
 
 
 
