@@ -19,7 +19,8 @@
     <h3>My Crew and Them Tasks</h3>
 
     <div class="col-sm-4">
-      <button id="new_button" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Assignee</button>
+      <button id="AssigneeModal" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Assignee</button>
+      <button id="getAssignees" type="button" class="btn btn-default">Get Assignees</button>
 
       <table class="table table-filter">
         <tbody id="assignee"></tbody>
@@ -28,9 +29,11 @@
 
     <div class="col-sm-8">
       <button id="new_button2" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Add Task</button>
-      <button id="btn_status" type="button" class="btn btn-primary">In Progres</button>
-      <button type="button" class="btn btn-secondary">Pending</button>
-      <button type="button" class="btn btn-success">Done</button>
+      <button id="btn_inProgress" type="button" class="btn btn-primary">In Progres</button>
+      <button id="btn_Pending" type="button" class="btn btn-secondary">Pending</button>
+      <button id="btn_Done" type="button" class="btn btn-success">Done</button>
+      <button id="btn_All" type="button" class="btn btn-warning">ALL</button>
+
       <table class="table table-hover">
         <tbody id="tasks"></tbody>
       </table>
@@ -42,8 +45,8 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <h4 class="modal-title">Add new assignee</h4>
-        <p> Assignee name: <input type='text' id='name' </p>
-          <button id='add1' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
+        <p> Assignee name: <input type='text' id='name'></p>
+          <button id='addAssigneeModal' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
       </div>
     </div>
   </div>
@@ -72,8 +75,6 @@
           <div class="form-group">
             <label for="exampleFormControlSelect1">Assignee</label>
             <select class="form-control" id="assigneeList">
-<!--           <select class="form-control" onchange="terefere(this);" id="assigneeList"> -->
-
     </select>
           </div>
           <label class="mr-sm-2" for="inlineFormCustomSelect">Task Status</label>
