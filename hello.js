@@ -1,5 +1,7 @@
 $(function() {
 
+
+
           $('#DetailModal').on('show.bs.modal', function(e) {
                 var $modal = $(this),
                 idd = e.relatedTarget.id;
@@ -15,14 +17,21 @@ $(function() {
       })
       .done(function(data) {
         $.each(data, function(i, item) {
-          var $element = $('<tr><td>' + item.name + '</td></tr>');
+          var $element = $('<tr class="my_row" id="terefere"><td>' +
+           item.name + '</td></tr>');
           $assignee.append($element);
         });
+
+        $('.my_row').on("click", function() {
+   var param = $(this).attr('id').split('_');
+
+   alert(param)
+})
 
       })
       .fail(function() {
         alert('loading error - getAssignees')
-      });
+      })
 
 
     $('#addAssigneeModal')
@@ -78,11 +87,6 @@ $(function() {
             '<td>' + item.taskStatus.name + '</td>' +
             '<td>' + item.dueTime + '</td>' +
             '<td>'+
-                '<span class="btn-group pull-right" style="margin-top: 5px">'+
-                 ' <button class="btn btn-warning btn-xs" data-toggle="modal" data-target= "#product_edit"><i class="glyphicon glyphicon-edit" ></i></button>'+
-                 ' <button class="btn btn-success btn-xs"; data-toggle="modal" data-target="#product_remove"><i class="glyphicon glyphicon-check" ></i></button>'+
-                '</span>' +
-              '</td>'+
             '</tr>')
         });
       })
@@ -213,7 +217,7 @@ $(function() {
         })
     })
 
-////////////////////////////////////////////////////////
+
   $('#btn_Done')
     .on('click', function() {
 
@@ -240,15 +244,6 @@ $(function() {
           })
         })
     })
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
 
 
       $('#btn_All')
