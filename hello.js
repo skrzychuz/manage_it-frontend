@@ -1,76 +1,73 @@
 $(function() {
 
-
-
-          $('#DetailModal').on('show.bs.modal', function(e) {
-                var $modal = $(this),
-                idd = e.relatedTarget.id;
-              })
-
-
-    var $assignee = $('#assignee')
-      .html("");
-
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/getAssignees'
+  $('#DetailModal').on('show.bs.modal', function(e) {
+        var $modal = $(this),
+        idd = e.relatedTarget.id;
       })
-      .done(function(data) {
-        $.each(data, function(i, item) {
-          var $element = $('<tr class="my_row" id="terefere"><td>' +
-           item.name + '</td></tr>');
-          $assignee.append($element);
+
+  var $assignee = $('#assignee')
+    .html("");
+
+  function addAssigneeView(newAssignee) {
+    $assignee.append('<tr class="my_row" id=' + (newAssignee.name)
+      .toString() + '><td>' +
+      newAssignee.name + '</td></tr>');
+  }
+
+  $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8080/getAssignees'
+    })
+    .done(function(data) {
+      $.each(data, function(i, item) {
+        addAssigneeView(item);
+      });
+    $('.my_row')
+        .on("click", function() {
+          var param = $(this)
+            .attr('id')
+            .split('_');
+
+          alert(param)
+        })
+    })
+    .fail(function() {
+      alert('loading error - getAssignees')
+    })
+
+
+
+
+  $('#addAssigneeModal')
+    .on('click', function() {
+
+      var $name = $('#name');
+      var assignee1 = {
+        name: $name.val(),
+      }
+      $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: 'POST',
+          url: 'http://localhost:8080/addAssignee1',
+          data: JSON.stringify(assignee1),
+          dataType: 'json'
+        })
+        .done(function(data) {
+          addAssigneeView(data);
+          $name.val('');
+        })
+        .fail(function() {
+          alert('loading error')
         });
 
-        $('.my_row').on("click", function() {
-   var param = $(this).attr('id').split('_');
 
-   alert(param)
-})
-
-      })
-      .fail(function() {
-        alert('loading error - getAssignees')
-      })
-
-
-    $('#addAssigneeModal')
-      .on('click', function() {
-
-        var $name = $('#name');
-        var assignee1 = {
-          name: $name.val(),
-        }
-        $.ajax({
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            type: 'POST',
-            url: 'http://localhost:8080/addAssignee',
-            data: JSON.stringify(assignee1),
-            dataType: 'json'
-          })
-          .done(function(data) {
-            $.each(data, function(i, item) {
-              var $element = $('<tr><th scope="row">' + (i + 1) + '</th>' +
-                '<td>' + item.name + '</td></tr>')
-              $assignee.append($element);
-            });
-            $('#myModal')
-              .on('hidden.bs.modal', function() {
-                document.location.reload();
-              });
-
-          })
-          .fail(function() {
-            alert('loading error')
-          });
-      });
+    });
 
 
 
-  $(function() {
 
     var $tasks = $('#tasks');
 
@@ -95,7 +92,7 @@ $(function() {
   $('#addTask')
     .on('click', function() {
 
-      var $tasks = $('#tasks');
+
       var $taskName = $('#taskName');
       var $dateInput = $('#dateInput');
       var $statusSelect = $('#statusSelect');
@@ -120,12 +117,14 @@ $(function() {
           dataType: 'json'
         })
         .done(function(data) {
-          $.each(data, function(i, item) {
-            $tasks.append('<tr><th scope="row">' + (i + 1) + '</th>' +
-              '<td>' + item.name + '</td>' +
-              '<td>' + item.assignee.name + '</td>' +
-              '<td>' + item.dueTime + '</td></tr>')
-          });
+          $tasks.append('<tr data-toggle="modal" id="55" data-target="#DetailModal">' +
+            '<td>' + data.name + '</td>' +
+            '<td>' + data.assignee.name + '</td>' +
+            '<td>' + data.taskStatus.name + '</td>' +
+            '<td>' + data.dueTime + '</td>' +
+            '<td>'+
+            '</tr>')
+
         })
 
         .fail(function() {
@@ -307,7 +306,6 @@ $(function() {
         alert('loading error')
       }
     })
-  })
   })
   })
 
