@@ -1,8 +1,8 @@
 $(function() {
 
-  var userFilter = 'all'
-  var statusFilter = 'all'
-  var priorityFilter = 'all'
+  var userFilter = 'all';
+  var statusFilter = 'all';
+  var priorityFilter = 'all';
 
   $assignee = $('#assignee')
 
@@ -29,15 +29,17 @@ $(function() {
       $('.my_row')
         .on("click", function() {
 
-          if(userFilter === $(this)
+          if (userFilter == $(this)
             .attr('id')) {
             userFilter = 'all'
+            updateFilters();
           } else {
             userFilter = $(this)
-            .attr('id')
+              .attr('id')
+            updateFilters();
           }
           // .split('_');
-          updateFilters();
+          // updateFilters();
 
         })
     })
@@ -48,7 +50,8 @@ $(function() {
 
 
 
-  var $tasks = $('#tasks');
+  var $tasks = $('#tasks')
+    .html('');
 
   $.ajax({
       type: 'GET',
@@ -98,46 +101,69 @@ $(function() {
 
   function taskGenerator() {
 
-    if (userFilter == 'all') {
-      if (statusFilter == 'all') {
-        getAllTaskFunction();
-      } else {
-        $taskRequest = {
-          taskStatus: statusFilter
-        }
+    if (userFilter == 'all' && statusFilter == 'all') {
+      $taskRequest = {}
+    }
+    if (userFilter != 'all' && statusFilter == 'all') {
+      $taskRequest = {
+        assignee: userFilter
       }
-    } else {
+    }
+    if (userFilter == 'all' && statusFilter != 'all') {
+      $taskRequest = {
+        taskStatus: statusFilter
+      }
+    }
+    if (userFilter != 'all' && statusFilter != 'all') {
       $taskRequest = {
         taskStatus: statusFilter,
         assignee: userFilter
       }
     }
+
     return $taskRequest;
   }
 
 
-
-
   $('#btn_inProgress')
     .on('click', function() {
-      statusFilter = $(this)
-        .attr('data-button');
-      updateFilters();
-    });
+      if (statusFilter == $(this)
+        .attr('data-button')) {
+        statusFilter = 'all';
+        updateFilters();
+      } else {
+        statusFilter = $(this)
+          .attr('data-button')
+        updateFilters();
+      }
+    })
+
 
   $('#btn_Pending')
     .on('click', function() {
-      statusFilter = $(this)
-        .attr('data-button');
-      updateFilters();
-    });
+      if (statusFilter == $(this)
+        .attr('data-button')) {
+        statusFilter = 'all';
+        updateFilters();
+      } else {
+        statusFilter = $(this)
+          .attr('data-button')
+        updateFilters();
+      }
+    })
 
   $('#btn_Done')
     .on('click', function() {
-      statusFilter = $(this)
-        .attr('data-button');
-      updateFilters();
-    });
+        if (statusFilter == $(this)
+          .attr('data-button')) {
+          statusFilter = 'all';
+          updateFilters();
+        } else{
+        statusFilter = $(this)
+          .attr('data-button')
+        updateFilters();
+      }
+    })
 
 
 })
