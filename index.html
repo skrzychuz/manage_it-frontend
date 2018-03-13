@@ -19,7 +19,7 @@
     <h3>My Crew and Them Tasks</h3>
 
     <div class="col-sm-4">
-      <button id="AssigneeModal" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Assignee</button>
+      <button id="AssigneeModal" type="button" class="btn btn-default" aria-pressed="true" data-toggle="modal" data-target="#myModal">Add Assignee</button>
       <button id="getAssignees" type="button" class="btn btn-default">Get Assignees</button>
 
       <table class="table table-filter">
@@ -28,10 +28,10 @@
     </div>
 
     <div class="col-sm-8">
-      <button id="new_button2" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal2">Add Task</button>
-      <button id="btn_inProgress" type="button" data-button="InProgress" class="btn btn-primary">In Progres</button>
-      <button id="btn_Pending" type="button" data-button="Pending" class="btn btn-secondary">Pending</button>
-      <button id="btn_Done" type="button" data-button="Done" class="btn btn-success">Done</button>
+      <button id="new_button2" type="button" class="btn btn-default active" data-toggle="modal" data-target="#myModal2">Add Task</button>
+      <button id="btn_inProgress" type="button" data-button="InProgress" aria-pressed="true" class="btn btn-primary">In Progres</button>
+      <button id="btn_Pending" type="button" data-button="Pending" class="btn btn-secondary active ">Pending</button>
+      <button id="btn_Done" type="button" data-button="Done" class="btn btn-success active">Done</button>
       <button id="btn_All" type="button" class="btn btn-warning">ALL</button>
 
       <table class="table table-hover">

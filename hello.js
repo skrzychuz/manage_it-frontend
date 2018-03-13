@@ -32,14 +32,14 @@ $(function() {
           if (userFilter == $(this)
             .attr('id')) {
             userFilter = 'all'
-            updateFilters();
+            getTask();
           } else {
             userFilter = $(this)
               .attr('id')
-            updateFilters();
+            getTask();
           }
           // .split('_');
-          // updateFilters();
+          // getTask();
 
         })
     })
@@ -47,33 +47,33 @@ $(function() {
       alert('loading error - getAssignees')
     })
 
+getTask();
+
+
+  // var $tasks = $('#tasks')
+  //   .html('');
+
+  // $.ajax({
+  //     type: 'GET',
+  //     url: 'http://localhost:8080/getTask123',
+
+  //   })
+  //   .done(function(data) {
+  //     $.each(data, function(i, item) {
+  //       // $tasks.append('<tr onclick="myFunction(this)">' +
+  //       $tasks.append('<tr data-toggle="modal" id="55" data-target="#DetailModal">' +
+  //         '<td>' + item.name + '</td>' +
+  //         '<td>' + item.assignee.name + '</td>' +
+  //         '<td>' + item.taskStatus.name + '</td>' +
+  //         '<td>' + item.dueTime + '</td>' +
+  //         '<td>' +
+  //         '</tr>')
+  //     });
+  //   })
 
 
 
-  var $tasks = $('#tasks')
-    .html('');
-
-  $.ajax({
-      type: 'GET',
-      url: 'http://localhost:8080/getTask123',
-
-    })
-    .done(function(data) {
-      $.each(data, function(i, item) {
-        // $tasks.append('<tr onclick="myFunction(this)">' +
-        $tasks.append('<tr data-toggle="modal" id="55" data-target="#DetailModal">' +
-          '<td>' + item.name + '</td>' +
-          '<td>' + item.assignee.name + '</td>' +
-          '<td>' + item.taskStatus.name + '</td>' +
-          '<td>' + item.dueTime + '</td>' +
-          '<td>' +
-          '</tr>')
-      });
-    })
-
-
-
-  function updateFilters() {
+  function getTask() {
 
 
     var $tasks = $('#tasks')
@@ -130,11 +130,11 @@ $(function() {
       if (statusFilter == $(this)
         .attr('data-button')) {
         statusFilter = 'all';
-        updateFilters();
+        getTask();
       } else {
         statusFilter = $(this)
           .attr('data-button')
-        updateFilters();
+        getTask();
       }
     })
 
@@ -144,11 +144,11 @@ $(function() {
       if (statusFilter == $(this)
         .attr('data-button')) {
         statusFilter = 'all';
-        updateFilters();
+        getTask();
       } else {
         statusFilter = $(this)
           .attr('data-button')
-        updateFilters();
+        getTask();
       }
     })
 
@@ -157,11 +157,11 @@ $(function() {
         if (statusFilter == $(this)
           .attr('data-button')) {
           statusFilter = 'all';
-          updateFilters();
+          getTask();
         } else{
         statusFilter = $(this)
           .attr('data-button')
-        updateFilters();
+        getTask();
       }
     })
 

@@ -1,3 +1,7 @@
 .table-hover tr td:hover {
     cursor: pointer;
 }
+.btn-default:active {
+  box-shadow: none;
+  background-color: black;
+}
