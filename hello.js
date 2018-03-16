@@ -1,15 +1,17 @@
 $(function() {
 
-  var userFilter = 'all';
-  var statusFilter = 'all';
-  var priorityFilter = 'all';
+  var userFilter = {};
+  var statusFilter = {};
+  var priorityFilter = {};
 
   $assignee = $('#assignee')
 
   $('#DetailModal')
     .on('show.bs.modal', function(e) {
-      var $modal = $(this),
-        idd = e.relatedTarget.id;
+      var $modal = $(this)
+      var assigneeName = e.relatedTarget.id;
+      $modal.find('.modal-title')
+        .html(assigneeName);
     })
 
   function addAssigneeView(newAssignee) {
@@ -31,54 +33,30 @@ $(function() {
 
           if (userFilter == $(this)
             .attr('id')) {
-            userFilter = 'all'
+            userFilter = {};
             getTask();
           } else {
             userFilter = $(this)
               .attr('id')
             getTask();
           }
-          // .split('_');
-          // getTask();
-
         })
     })
     .fail(function() {
       alert('loading error - getAssignees')
     })
 
-getTask();
-
-
-  // var $tasks = $('#tasks')
-  //   .html('');
-
-  // $.ajax({
-  //     type: 'GET',
-  //     url: 'http://localhost:8080/getTask123',
-
-  //   })
-  //   .done(function(data) {
-  //     $.each(data, function(i, item) {
-  //       // $tasks.append('<tr onclick="myFunction(this)">' +
-  //       $tasks.append('<tr data-toggle="modal" id="55" data-target="#DetailModal">' +
-  //         '<td>' + item.name + '</td>' +
-  //         '<td>' + item.assignee.name + '</td>' +
-  //         '<td>' + item.taskStatus.name + '</td>' +
-  //         '<td>' + item.dueTime + '</td>' +
-  //         '<td>' +
-  //         '</tr>')
-  //     });
-  //   })
-
-
+  getTask();
 
   function getTask() {
 
 
     var $tasks = $('#tasks')
       .html('');
-    var $taskRequest = taskGenerator();
+    var $taskRequest = {
+      taskStatus: statusFilter,
+      assignee: userFilter
+    }
 
     $.ajax({
         type: 'GET',
@@ -87,9 +65,8 @@ getTask();
       })
       .done(function(data) {
         $.each(data, function(i, item) {
-          // $tasks.append('<tr onclick="myFunction(this)">' +
-          $tasks.append('<tr data-toggle="modal" id="55" data-target="#DetailModal">' +
-            '<td>' + item.name + '</td>' +
+          $tasks.append('<tr data-toggle="modal" id="' + item.assignee.name + 
+            '"data-target="#DetailModal"><td>' + item.name + '</td>' +
             '<td>' + item.assignee.name + '</td>' +
             '<td>' + item.taskStatus.name + '</td>' +
             '<td>' + item.dueTime + '</td>' +
@@ -99,37 +76,12 @@ getTask();
       })
   }
 
-  function taskGenerator() {
-
-    if (userFilter == 'all' && statusFilter == 'all') {
-      $taskRequest = {}
-    }
-    if (userFilter != 'all' && statusFilter == 'all') {
-      $taskRequest = {
-        assignee: userFilter
-      }
-    }
-    if (userFilter == 'all' && statusFilter != 'all') {
-      $taskRequest = {
-        taskStatus: statusFilter
-      }
-    }
-    if (userFilter != 'all' && statusFilter != 'all') {
-      $taskRequest = {
-        taskStatus: statusFilter,
-        assignee: userFilter
-      }
-    }
-
-    return $taskRequest;
-  }
-
 
   $('#btn_inProgress')
     .on('click', function() {
       if (statusFilter == $(this)
         .attr('data-button')) {
-        statusFilter = 'all';
+        statusFilter = {};
         getTask();
       } else {
         statusFilter = $(this)
@@ -143,7 +95,7 @@ getTask();
     .on('click', function() {
       if (statusFilter == $(this)
         .attr('data-button')) {
-        statusFilter = 'all';
+        statusFilter = {};
         getTask();
       } else {
         statusFilter = $(this)
@@ -154,18 +106,14 @@ getTask();
 
   $('#btn_Done')
     .on('click', function() {
-        if (statusFilter == $(this)
-          .attr('data-button')) {
-          statusFilter = 'all';
-          getTask();
-        } else{
+      if (statusFilter == $(this)
+        .attr('data-button')) {
+        statusFilter = {};
+        getTask();
+      } else {
         statusFilter = $(this)
           .attr('data-button')
         getTask();
       }
     })
-
-
 })
-
-//////////////////////////////////
