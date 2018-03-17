@@ -116,4 +116,30 @@ $(function() {
         getTask();
       }
     })
+
+      $('#addAssigneeModal')
+    .on('click', function() {
+
+      var $name = $('#name');
+      var assignee1 = {
+        name: $name.val(),
+      }
+      $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: 'POST',
+          url: 'http://localhost:8080/addAssignee1',
+          data: JSON.stringify(assignee1),
+          dataType: 'json'
+        })
+        .done(function(data) {
+          addAssigneeView(data);
+          $name.val('');
+        })
+        .fail(function() {
+          alert('loading error')
+        });
+    });
 })
