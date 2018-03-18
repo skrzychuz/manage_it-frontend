@@ -5,6 +5,7 @@ $(function() {
   var priorityFilter = {};
 
   $assignee = $('#assignee')
+  $tasks = $('#tasks')
 
   $('#DetailModal')
     .on('show.bs.modal', function(e) {
@@ -14,10 +15,30 @@ $(function() {
         .html(assigneeName);
     })
 
+
+  $('#myModal2')
+    .on('show.bs.modal', function(e) {
+getAssignees();
+    })
+
+
+
+    getAssignees();
+
   function addAssigneeView(newAssignee) {
     $assignee.append('<tr class="my_row" id=' + (newAssignee.name)
       .toString() + '><td>' +
       newAssignee.name + '</td></tr>');
+  }
+
+  function showTask(item) {
+    $tasks.append('<tr data-toggle="modal" id="' + item.assignee.name +
+      '"data-target="#DetailModal"><td>' + item.name + '</td>' +
+      '<td>' + item.assignee.name + '</td>' +
+      '<td>' + item.taskStatus.name + '</td>' +
+      '<td>' + item.dueTime + '</td>' +
+      '<td>' +
+      '</tr>')
   }
 
   $.ajax({
@@ -50,7 +71,6 @@ $(function() {
 
   function getTask() {
 
-
     var $tasks = $('#tasks')
       .html('');
     var $taskRequest = {
@@ -65,32 +85,30 @@ $(function() {
       })
       .done(function(data) {
         $.each(data, function(i, item) {
-          $tasks.append('<tr data-toggle="modal" id="' + item.assignee.name + 
-            '"data-target="#DetailModal"><td>' + item.name + '</td>' +
-            '<td>' + item.assignee.name + '</td>' +
-            '<td>' + item.taskStatus.name + '</td>' +
-            '<td>' + item.dueTime + '</td>' +
-            '<td>' +
-            '</tr>')
+          showTask(item)
         });
       })
   }
 
-    $('#addTask')
+  $('#addTask')
     .on('click', function() {
 
       // var $dataFormOption = $('#assigneeList option:selected').data('id');
       var $tasks = $('#tasks');
       var $taskName = $('#taskName');
       var $dateInput = $('#dateInput');
-      var $statusSelect = $('#statusSelect');
+      var $statusName = $('#statusSelect option:selected').text();
+      var $statusId = $('#statusSelect').val();
       var $assigneeName = $('#assigneeList option:selected').text();
       var $assigneeId = $('#assigneeList').val();
 
       var task = {
         name: $taskName.val(),
         dueTime: $dateInput.val(),
-        taskStatus: $statusSelect.val(),
+        taskStatus: {
+          id: $statusId,
+          name: $statusName,
+        },
         assignee: {
           id: $assigneeId,
           name: $assigneeName,
@@ -107,42 +125,13 @@ $(function() {
           dataType: 'json'
         })
         .done(function(item) {
-          $tasks.append('<tr data-toggle="modal" id="' + item.assignee.name + 
-            '"data-target="#DetailModal"><td>' + item.name + '</td>' +
-            '<td>' + item.assignee.name + '</td>' +
-            '<td>' + item.taskStatus.name + '</td>' +
-            '<td>' + item.dueTime + '</td>' +
-            '<td>' +
-            '</tr>')
-
+          showTask(item)
+          $('#myModal2').removeData();
         })
-
         .fail(function() {
           alert('saving error - addTask')
         })
-///////////////////////////////////////////////
 
-
-  // $(function() {
-
-  //   var $status = $('#statusSelect');
-
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: 'http://localhost:8080/getStatuses',
-  //     success: function(data) {
-  //       $.each(data, function(i, item) {
-  //         $status.append('<option>' + item.name + '</option>')
-
-  //       });
-  //     },
-  //     error: function() {
-  //       alert('loading error')
-  //     }
-  //   })
-  // })
-  
-/////////////////////////////////////////////
     })
 
 
@@ -186,7 +175,7 @@ $(function() {
       }
     })
 
-      $('#addAssigneeModal')
+  $('#addAssigneeModal')
     .on('click', function() {
 
       var $name = $('#name');
@@ -213,23 +202,42 @@ $(function() {
     });
 
 
-     $(function() {
+  function getAssignees() {
 
-    var $assignee = $('#assigneeList');
+    var $assigneeInModal = $('#assigneeList').html('');
 
     $.ajax({
-      type: 'GET',
-      url: 'http://localhost:8080/getAssignees',
-       })
+        type: 'GET',
+        url: 'http://localhost:8080/getAssignees',
+      })
       .done(function(data) {
         $.each(data, function(i, item) {
-          $assignee.append('<option data-id="777" value="' + item.id + '">' + item.name + '</option>')
+          $assigneeInModal.append('<option data-id="777" value="' + item.id + '">' + item.name + '</option>')
 
         })
-     })
-       .fail(function() {
-          alert('saving error - addTask')
-        })
-    });
+      })
+      .fail(function() {
+        alert('saving error - gettask')
+      })
+  }
 
+
+  $(function() {
+
+    var $status = $('#statusSelect');
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/getStatuses',
+      })
+      .done(function(data) {
+        $.each(data, function(i, item) {
+          $status.append('<option value="' + item.id + '">' + item.name + '</option>')
+
+        })
+      })
+      .fail(function() {
+        alert('loading error - getStatuses')
+      })
+  })
 })
