@@ -76,6 +76,75 @@ $(function() {
       })
   }
 
+    $('#addTask')
+    .on('click', function() {
+
+      // var $dataFormOption = $('#assigneeList option:selected').data('id');
+      var $tasks = $('#tasks');
+      var $taskName = $('#taskName');
+      var $dateInput = $('#dateInput');
+      var $statusSelect = $('#statusSelect');
+      var $assigneeName = $('#assigneeList option:selected').text();
+      var $assigneeId = $('#assigneeList').val();
+
+      var task = {
+        name: $taskName.val(),
+        dueTime: $dateInput.val(),
+        taskStatus: $statusSelect.val(),
+        assignee: {
+          id: $assigneeId,
+          name: $assigneeName,
+        }
+      };
+      $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: 'POST',
+          url: 'http://localhost:8080/addTask',
+          data: JSON.stringify(task),
+          dataType: 'json'
+        })
+        .done(function(item) {
+          $tasks.append('<tr data-toggle="modal" id="' + item.assignee.name + 
+            '"data-target="#DetailModal"><td>' + item.name + '</td>' +
+            '<td>' + item.assignee.name + '</td>' +
+            '<td>' + item.taskStatus.name + '</td>' +
+            '<td>' + item.dueTime + '</td>' +
+            '<td>' +
+            '</tr>')
+
+        })
+
+        .fail(function() {
+          alert('saving error - addTask')
+        })
+///////////////////////////////////////////////
+
+
+  // $(function() {
+
+  //   var $status = $('#statusSelect');
+
+  //   $.ajax({
+  //     type: 'GET',
+  //     url: 'http://localhost:8080/getStatuses',
+  //     success: function(data) {
+  //       $.each(data, function(i, item) {
+  //         $status.append('<option>' + item.name + '</option>')
+
+  //       });
+  //     },
+  //     error: function() {
+  //       alert('loading error')
+  //     }
+  //   })
+  // })
+  
+/////////////////////////////////////////////
+    })
+
 
   $('#btn_inProgress')
     .on('click', function() {
@@ -142,4 +211,25 @@ $(function() {
           alert('loading error')
         });
     });
+
+
+     $(function() {
+
+    var $assignee = $('#assigneeList');
+
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:8080/getAssignees',
+       })
+      .done(function(data) {
+        $.each(data, function(i, item) {
+          $assignee.append('<option data-id="777" value="' + item.id + '">' + item.name + '</option>')
+
+        })
+     })
+       .fail(function() {
+          alert('saving error - addTask')
+        })
+    });
+
 })
