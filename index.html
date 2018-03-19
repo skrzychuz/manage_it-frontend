@@ -19,7 +19,7 @@
     <h3>My Crew and Them Tasks</h3>
 
     <div class="col-sm-4">
-      <button id="AssigneeModal" type="button" class="btn btn-default" aria-pressed="true" data-toggle="modal" data-target="#myModal" onclick="this.blur();">Add Assignee</button>
+      <button id="AssigneeModal" type="button" class="btn btn-default" aria-pressed="true" data-toggle="modal" data-target="#myModal">Add Assignee</button>
       <button id="getAssignees" type="button" class="btn btn-default">Get Assignees</button>
 
       <table class="table table-filter">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="col-sm-8">
-      <button id="new_button2" type="button" class="btn btn-default active" data-toggle="modal" data-target="#myModal2">Add Task</button>
+      <button id="new_button2" type="button" class="btn btn-default active" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
       <button id="btn_inProgress" type="button" data-button="InProgress" aria-pressed="true" class="btn btn-primary">In Progres</button>
       <button id="btn_Pending" type="button" data-button="Pending" class="btn btn-secondary active ">Pending</button>
       <button id="btn_Done" type="button" data-button="Done" class="btn btn-success active">Done</button>
@@ -52,7 +52,7 @@
   </div>
 
 
-  <div id="myModal2" class="modal fade" role="dialog">
+  <div id="addTaskModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <h4 class="modal-title">Add new assignee</h4>
@@ -82,13 +82,13 @@
         <option selected>Status...</option>
        </select>
         </form>
-        <button id='addTask' type="button" class="btn btn-default" data-dismiss="modal">add task</button>
+        <button id='btn_addTask' type="button" class="btn btn-default" data-dismiss="modal">add task</button>
       </div>
     </div>
   </div>
 
 
-<div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
 

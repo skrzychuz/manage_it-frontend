@@ -16,14 +16,37 @@ $(function() {
     })
 
 
-  $('#myModal2')
+  $('#addTaskModal')
     .on('show.bs.modal', function(e) {
 getAssignees();
     })
 
+      $('#addAssigneeModal')
+    .on('click', function() {
 
+      var $name = $('#name');
+      var assignee1 = {
+        name: $name.val(),
+      }
+      $.ajax({
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          type: 'POST',
+          url: 'http://localhost:8080/addAssignee1',
+          data: JSON.stringify(assignee1),
+          dataType: 'json'
+        })
+        .done(function(data) {
+          addAssigneeView(data);
+          $name.val('');
+        })
+        .fail(function() {
+          alert('loading error')
+        });
+    });
 
-    getAssignees();
 
   function addAssigneeView(newAssignee) {
     $assignee.append('<tr class="my_row" id=' + (newAssignee.name)
@@ -39,6 +62,46 @@ getAssignees();
       '<td>' + item.dueTime + '</td>' +
       '<td>' +
       '</tr>')
+  }
+
+    function getAssignees() {
+
+    var $assigneeInModal = $('#assigneeList').html('');
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/getAssignees',
+      })
+      .done(function(data) {
+        $.each(data, function(i, item) {
+          $assigneeInModal.append('<option data-id="777" value="' + item.id + '">' + item.name + '</option>')
+
+        })
+      })
+      .fail(function() {
+        alert('saving error - gettask')
+      })
+  }
+
+    function getTask() {
+
+    var $tasks = $('#tasks')
+      .html('');
+    var $taskRequest = {
+      taskStatus: statusFilter,
+      assignee: userFilter
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/getTask123',
+        data: $taskRequest
+      })
+      .done(function(data) {
+        $.each(data, function(i, item) {
+          showTask(item)
+        });
+      })
   }
 
   $.ajax({
@@ -69,28 +132,9 @@ getAssignees();
 
   getTask();
 
-  function getTask() {
 
-    var $tasks = $('#tasks')
-      .html('');
-    var $taskRequest = {
-      taskStatus: statusFilter,
-      assignee: userFilter
-    }
 
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/getTask123',
-        data: $taskRequest
-      })
-      .done(function(data) {
-        $.each(data, function(i, item) {
-          showTask(item)
-        });
-      })
-  }
-
-  $('#addTask')
+  $('#btn_addTask')
     .on('click', function() {
 
       // var $dataFormOption = $('#assigneeList option:selected').data('id');
@@ -126,7 +170,7 @@ getAssignees();
         })
         .done(function(item) {
           showTask(item)
-          $('#myModal2').removeData();
+          $('#addTaskModal').removeData();
         })
         .fail(function() {
           alert('saving error - addTask')
@@ -174,53 +218,6 @@ getAssignees();
         getTask();
       }
     })
-
-  $('#addAssigneeModal')
-    .on('click', function() {
-
-      var $name = $('#name');
-      var assignee1 = {
-        name: $name.val(),
-      }
-      $.ajax({
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          type: 'POST',
-          url: 'http://localhost:8080/addAssignee1',
-          data: JSON.stringify(assignee1),
-          dataType: 'json'
-        })
-        .done(function(data) {
-          addAssigneeView(data);
-          $name.val('');
-        })
-        .fail(function() {
-          alert('loading error')
-        });
-    });
-
-
-  function getAssignees() {
-
-    var $assigneeInModal = $('#assigneeList').html('');
-
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/getAssignees',
-      })
-      .done(function(data) {
-        $.each(data, function(i, item) {
-          $assigneeInModal.append('<option data-id="777" value="' + item.id + '">' + item.name + '</option>')
-
-        })
-      })
-      .fail(function() {
-        alert('saving error - gettask')
-      })
-  }
-
 
   $(function() {
 
