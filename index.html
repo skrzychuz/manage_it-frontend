@@ -2,26 +2,104 @@
 <html lang="en">
 
 <head>
-    <title>My Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="hello.js"></script>
+  <title>My Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="hello.js"></script>
+
 </head>
 
 <body>
-<div class="container">
-  <h1>My First Page</h1>
-  <p>par1</p> 
-  <p>par2</p>           
-</div>
+  <div class="container">
+    <h3>My Crew and Them Tasks</h3>
 
-    <div class="row">
-    <div class="col-sm-4">.col-sm-4</div>
-    <div class="col-sm-8">.col-sm-8</div>
+    <div class="col-sm-4">
+      <button id="AssigneeModal" type="button" class="btn btn-default" aria-pressed="true" data-toggle="modal" data-target="#addAssigneeModal" onclick="this.blur();">Add Assignee</button>
+      <table class="table table-filter">
+        <tbody id="assignee"></tbody>
+      </table>
     </div>
 
+    <div class="col-sm-8">
+      <button id="new_button2" type="button" class="btn btn-default active" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
+      <button id="btn_inProgress" type="button" data-button="InProgress" aria-pressed="true" class="btn btn-primary">In Progres</button>
+      <button id="btn_Pending" type="button" data-button="Pending" class="btn btn-secondary active ">Pending</button>
+      <button id="btn_Done" type="button" data-button="Done" class="btn btn-success active">Done</button>
+
+      <table class="table table-hover">
+        <tbody id="tasks"></tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div id="addAssigneeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h4 class="modal-title">Add new assignee</h4>
+        <p> Assignee name: <input type='text' id='name'></p>
+        <button id='addAssigneeModal' type="button" class="btn btn-default" data-dismiss="modal">ADD</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="addTaskModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <h4 class="modal-title">Add new assignee</h4>
+
+
+        <form>
+          <div class="form-group">
+            <label for="forTaskName">Task name</label>
+            <input type="task_name" class="form-control" id="taskName">
+          </div>
+          <div class="form-group">
+            <label for="forDescription">Task description</label>
+            <textarea class="form-control" id="task_desc" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="form-group">
+              <input class="form-control" type="date" id="dateInput">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Assignee</label>
+            <select class="form-control" id="assigneeList">
+    </select>
+          </div>
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Task Status</label>
+          <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="statusSelect">
+        <option selected>Status...</option>
+       </select>
+        </form>
+        <button id='addTask' type="button" class="btn btn-default" data-dismiss="modal">add task</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="long">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
