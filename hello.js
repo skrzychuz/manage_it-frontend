@@ -12,23 +12,60 @@ $(function() {
       var $modal = $(this)
       var assigneeName = e.relatedTarget.id;
       $modal.find('.modal-title')
-        .html(assigneeName);
+        .html(assigneeName + " Task");
     })
 
-
-  $('#myModal2')
+  $('#addTaskModal')
     .on('show.bs.modal', function(e) {
-getAssignees();
+      getAssignees();
     })
 
-
-
-    getAssignees();
+  getAssignees();
 
   function addAssigneeView(newAssignee) {
     $assignee.append('<tr class="my_row" id=' + (newAssignee.name)
       .toString() + '><td>' +
       newAssignee.name + '</td></tr>');
+  }
+
+  function getTask() {
+
+    var $tasks = $('#tasks')
+      .html('');
+    var $taskRequest = {
+      taskStatus: statusFilter,
+      assignee: userFilter
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/getTaskList',
+        data: $taskRequest
+      })
+      .done(function(data) {
+        $.each(data, function(i, item) {
+          showTask(item)
+        });
+      })
+  }
+
+
+  function getAssignees() {
+
+    var $assigneeInModal = $('#assigneeList').html('');
+
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/getAssignees',
+      })
+      .done(function(data) {
+        $.each(data, function(i, item) {
+          $assigneeInModal.append('<option value="' + item.id + '">' + item.name + '</option>')
+        })
+      })
+      .fail(function() {
+        alert('saving error - gettask')
+      })
   }
 
   function showTask(item) {
@@ -69,31 +106,10 @@ getAssignees();
 
   getTask();
 
-  function getTask() {
-
-    var $tasks = $('#tasks')
-      .html('');
-    var $taskRequest = {
-      taskStatus: statusFilter,
-      assignee: userFilter
-    }
-
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/getTask123',
-        data: $taskRequest
-      })
-      .done(function(data) {
-        $.each(data, function(i, item) {
-          showTask(item)
-        });
-      })
-  }
 
   $('#addTask')
     .on('click', function() {
 
-      // var $dataFormOption = $('#assigneeList option:selected').data('id');
       var $tasks = $('#tasks');
       var $taskName = $('#taskName');
       var $dateInput = $('#dateInput');
@@ -126,12 +142,10 @@ getAssignees();
         })
         .done(function(item) {
           showTask(item)
-          $('#myModal2').removeData();
         })
         .fail(function() {
           alert('saving error - addTask')
         })
-
     })
 
 
@@ -201,27 +215,6 @@ getAssignees();
         });
     });
 
-
-  function getAssignees() {
-
-    var $assigneeInModal = $('#assigneeList').html('');
-
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost:8080/getAssignees',
-      })
-      .done(function(data) {
-        $.each(data, function(i, item) {
-          $assigneeInModal.append('<option data-id="777" value="' + item.id + '">' + item.name + '</option>')
-
-        })
-      })
-      .fail(function() {
-        alert('saving error - gettask')
-      })
-  }
-
-
   $(function() {
 
     var $status = $('#statusSelect');
@@ -233,7 +226,6 @@ getAssignees();
       .done(function(data) {
         $.each(data, function(i, item) {
           $status.append('<option value="' + item.id + '">' + item.name + '</option>')
-
         })
       })
       .fail(function() {
